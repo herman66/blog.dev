@@ -87,7 +87,20 @@ class PostsController extends Controller
     }
 
     public function showContact(){
-        //return view('contact');
-        return view('errors.503');
+        
+        //$imba = ['jane','soso','test'];
+        $imba = [];
+
+        return view('contact', compact('imba'));
+        //return view('errors.503');
+    }
+
+
+    public function showPost($category, $date, $id){
+        // return view('post')->with('id' ,$id);
+        return view('post', compact('category', 'date', 'id'));
+
     }
 }
+
+
