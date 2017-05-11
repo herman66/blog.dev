@@ -46,10 +46,45 @@ Route::get('/', function () {
 
 // Route::resource('post', 'PostsController' );
 
-Route::get('contact', 'PostsController@showContact');
+//Route::get('contact', 'PostsController@showContact');
 
-Route::get('post/{gategory}/{date}/{id}', 'PostsController@showPost');
+//Route::get('post/{gategory}/{date}/{id}', 'PostsController@showPost');
 
-Route::get('error', function(){
-    return view('errors.503');
+//Route::get('error', function(){
+    //return view('errors.503');
+//});
+
+//Route::get('insert', function(){
+
+    //DB::insert('INSERT INTO posts (title, `fulltext`) VALUES (?,?)' , ['英霸無隻'，'Hello World']);
+//DB::insert('INSERT INTO posts (title, `fulltext`) VALUES (?,?)', ['英霸無隻','Hello World']);
+//});
+
+Route::get('insert', function(){
+    //DB::insert('INSERT INTO posts (title, `fulltext`) VALUES (?,?)', ['hi','hello']);
+    DB::insert('INSERT INTO posts (title, `fulltext`) VALUES (?,?)', ['英霸無隻','Hello World']);
+});
+
+Route::get('read',function(){
+    $results = DB::select('SELECT * FROM posts WHERE id = ?',[1]);
+    //return $results;
+    //foreach ($results as $result) {
+    //    echo $result->title . "<br>\n";
+    //    echo $result->fulltext . "<br>\n";
+    //}
+    var_dump($results);
+});
+
+Route:get('update', function(){
+    //DB::update('UPDATE posts SET title = "天氣很好" WHERE id = ?', [1]);
+    //$sql = DB::update('UPDATE posts SET title = "天氣很好" WHERE id = ?', [1]);
+    //var_dump($sql);
+    DB::update('UPDATE posts SET title = "天氣不好" WHERE id = ?', [1]);
+    
+});
+
+Route::get('delete', function(){
+    $num = 2;
+    DB::delete('DELETE FROM posts WHERE id = ?', [$num]);
+    //DB::delete('DELETE FROM posts WHERE id = 2');
 });
