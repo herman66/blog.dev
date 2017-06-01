@@ -96,7 +96,9 @@ Route::get('/', function () {
 
 Route:get('read', function(){
 
-    //$posts = Post::all();
+    $posts = Post::all();
+     return $posts;
+
 
     // $posts = Post::where('is_admin',0)
     //             ->orderBy('id','desc')
@@ -105,9 +107,9 @@ Route:get('read', function(){
 
     //$post = Post::find(2);
 
-    $post = Post::where('is_admin',0)->first();
+    //$post = Post::where('is_admin',0)->first();
 
-    return $post->title;
+    //return $post->title;
 
     // foreach($posts as $post) {
     //     echo $post->id . ": " . $post->title . "<br>\n";
@@ -150,11 +152,58 @@ Route::get('update/{id}/{title}/{fulltext}', function($id, $title, $fulltext){
 
     // $post->save();
 
+//流暢的寫法
     Post::where('id', $id)->where('is_admin',0)
         ->update([
             'title'=>$title,
             'fulltext'=>$fulltext
         ]);
 
+
+});
+
+
+Route::get('delete/{id}', function ($id) {
+
+   $post = Post::find($id);
+   $post->delete();
+
+//    Post::destroy([1.3.5]);
+
+});
+
+
+Route::get('readall', function(){
+
+    $posts = Post::withTrashed()->get();//find()
+    return $posts;
+
+});
+
+
+Route::get('onlytrash', function(){
+
+    $posts = Post::onlyTrashed()->get();
+    return $posts; 
+
+});
+
+Route::get('restroe' , function(){
+
+    Post::onlyTranshed()->restore();
+
+});
+
+
+Route::get('forcedelete', function(){
+
+    Post::onlyTrashed()forceDelete();
+
+});
+
+
+Route::get('forcedelete/{id}', function($id){
+
+    Post::onlyTrashed($id)forceDelete($id);
 
 });
