@@ -2,6 +2,8 @@
 
 
 use App\Post;
+use App\User;
+use App\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -195,15 +197,64 @@ Route::get('restroe' , function(){
 });
 
 
-Route::get('forcedelete', function(){
+// Route::get('forcedelete', function(){
 
-    Post::onlyTrashed()forceDelete();
+//     Post::onlyTrashed()forceDelete();
+
+// });
+
+
+// Route::get('forcedelete/{id}', function($id){
+
+//     Post::onlyTrashed($id)forceDelete();
+
+// });
+
+Route::get('user/{userid}/post', function($userid){
+
+    return User::find($userid)->post->title;
+
+});
+
+Route::get('user/{userid}/posts', function($userid){
+    
+    $user = User::find($userid);
+
+    foreach($user->posts as $post) {
+        echo $post->title . "<br>\n";
+    }
+});
+
+Route::get('post/{postid}/user', function($postid){
+
+    return Post::find($postid)->user->name;
+
+});
+
+Route::get('user/{userid}/role', function($userid){
+
+    // $user = User::find($userid);
+    // echo $user->name ."你的權限:<br>\n";
+    // foreach($user->roles as $role){
+    //     echo $role->name. "<br>\n";
+
+    // }
+    //取用roles數性
+
+    $role = User::find($userid)->roles()->orderBy('id','desc')->get();
+    return $role;
+    //啋叫roles()方法
 
 });
 
 
-Route::get('forcedelete/{id}', function($id){
+Route::get('role/{roleid}/user', function($roleid){
 
-    Post::onlyTrashed($id)forceDelete($id);
+    $users = Role::find($roleid)
+        ->users()
+        ->orderBy('id','desc')
+        ->get();
+
+    return $users;
 
 });
