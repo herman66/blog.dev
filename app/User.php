@@ -51,4 +51,8 @@ class User extends Model implements AuthenticatableContract,
         return $this->belongsToMany('App\Role');
     }
 
+    public function photos(){
+        return $this->morphMany('App\Photo','imageable');        
+    }
+
 }

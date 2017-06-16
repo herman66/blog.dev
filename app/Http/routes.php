@@ -4,6 +4,9 @@
 use App\Post;
 use App\User;
 use App\Role;
+use App\Country;
+use App\Photo;
+use App\Tag;
 
 /*
 |--------------------------------------------------------------------------
@@ -256,5 +259,72 @@ Route::get('role/{roleid}/user', function($roleid){
         ->get();
 
     return $users;
+
+});
+
+
+Route::get('user/country/{countryid}', function ($countryid){
+
+    $country = Country::find($countryid);
+
+    foreach ($country->posts as $post) {
+        echo $post->title . "<br>\n";
+    }
+
+
+});
+
+
+Route::get('country/{countryid}/posts', function($countryid){
+
+    $country = Country::find($countryid);
+
+    foreach ($country->posts as $post){
+        echo $post->title . "<br>\n";
+    }
+
+});
+
+Route::get('user/{userid}/photos', function($userid){
+
+    $user = User::find($userid);
+
+    foreach ($user->photos as $photo){
+        // return $photo;
+        echo $photo->path . "<br>\n";
+    }
+
+});
+
+Route::get('photo/{photoid}', function($photoid){
+
+    $photo = Photo::find($photoid);
+
+    return $photo->imageable;
+
+});
+
+Route::get('post/{postid}/tags',function($postid){
+
+
+    $post = Post::find($postid);
+    echo $post->title . "<br>\n";
+
+    echo "Tag: ";
+    foreach ($post->tags as $tag) {
+        echo $tag->name . ", ";
+    }
+});
+
+Route::get('tag/{tagid}/post',function($tagid){
+
+    $tag = Tag::find($tagid);
+    echo "Tag: " . $tag->name . "<br>\n";
+
+    echo "<ul>";
+    foreach ($tag->posts as $post){
+        echo "<li>" . $post->title . "</li>";
+    }
+    echo "</ul>";
 
 });
