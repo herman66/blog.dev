@@ -15,18 +15,22 @@ class Post extends Model
 
     protected $dates = ["deleted_at"];
 
+//一對一
     public function user() {
         return $this->belongsTo('App\User');
     }
 
+//一對多
     public function users() {
         return $this->belongsTo('App\User');
     } 
 
+//多型
     public function photos(){
         return $this->morphMany('App\Photo','imageable');
     }
 
+//多型多對多
     public function tags(){
         return $this->morphToMany('App\Tag','taggable');
     }

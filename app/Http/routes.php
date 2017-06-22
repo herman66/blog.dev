@@ -308,7 +308,7 @@ Route::get('post/{postid}/tags',function($postid){
 
 
     $post = Post::find($postid);
-    echo $post->title . "<br>\n";
+    echo "文章：" . $post->title . "<br>\n";
 
     echo "Tag: ";
     foreach ($post->tags as $tag) {
