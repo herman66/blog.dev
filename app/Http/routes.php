@@ -99,10 +99,10 @@ Route::get('/', function () {
 
 
 
-Route:get('read', function(){
+// Route:get('read', function(){
 
-    $posts = Post::all();
-     return $posts;
+//     $posts = Post::all();
+//      return $posts;
 
 
     // $posts = Post::where('is_admin',0)
@@ -120,35 +120,35 @@ Route:get('read', function(){
     //     echo $post->id . ": " . $post->title . "<br>\n";
     // }
 
-});
+// });
 
 
-Route::get('insert/{title}/{fulltext}', function($title, $fulltext){
+// Route::get('insert/{title}/{fulltext}', function($title, $fulltext){
 
-    $post = new Post;
+//     $post = new Post;
 
-    $post->title = "$title";
-    $post->fulltext = "$fulltext";
+//     $post->title = "$title";
+//     $post->fulltext = "$fulltext";
 
-    $post->save();
-
-
-});
+//     $post->save();
 
 
-Route::get('create', function(){
-
-    Post::create([
-
-        'title'=>'kkman',
-        'fulltext'=>'is super'
-
-    ]);
-
-});
+// });
 
 
-Route::get('update/{id}/{title}/{fulltext}', function($id, $title, $fulltext){
+// Route::get('create', function(){
+
+//     Post::create([
+
+//         'title'=>'kkman',
+//         'fulltext'=>'is super'
+
+//     ]);
+
+// });
+
+
+// Route::get('update/{id}/{title}/{fulltext}', function($id, $title, $fulltext){
 
     // $post = Post::find($id);
 
@@ -158,46 +158,46 @@ Route::get('update/{id}/{title}/{fulltext}', function($id, $title, $fulltext){
     // $post->save();
 
 //流暢的寫法
-    Post::where('id', $id)->where('is_admin',0)
-        ->update([
-            'title'=>$title,
-            'fulltext'=>$fulltext
-        ]);
+//     Post::where('id', $id)->where('is_admin',0)
+//         ->update([
+//             'title'=>$title,
+//             'fulltext'=>$fulltext
+//         ]);
 
 
-});
+// });
 
 
-Route::get('delete/{id}', function ($id) {
+// Route::get('delete/{id}', function ($id) {
 
-   $post = Post::find($id);
-   $post->delete();
+//    $post = Post::find($id);
+//    $post->delete();
 
 //    Post::destroy([1.3.5]);
 
-});
+//});
 
 
-Route::get('readall', function(){
+// Route::get('readall', function(){
 
-    $posts = Post::withTrashed()->get();//find()
-    return $posts;
+//     $posts = Post::withTrashed()->get();//find()
+//     return $posts;
 
-});
+// });
 
 
-Route::get('onlytrash', function(){
+// Route::get('onlytrash', function(){
 
-    $posts = Post::onlyTrashed()->get();
-    return $posts; 
+//     $posts = Post::onlyTrashed()->get();
+//     return $posts; 
 
-});
+// });
 
-Route::get('restroe' , function(){
+// Route::get('restroe' , function(){
 
-    Post::onlyTranshed()->restore();
+//     Post::onlyTranshed()->restore();
 
-});
+// });
 
 
 // Route::get('forcedelete', function(){
@@ -213,118 +213,120 @@ Route::get('restroe' , function(){
 
 // });
 
-Route::get('user/{userid}/post', function($userid){
+// Route::get('user/{userid}/post', function($userid){
 
-    return User::find($userid)->post->title;
+//     return User::find($userid)->post->title;
 
-});
+// });
 
-Route::get('user/{userid}/posts', function($userid){
+// Route::get('user/{userid}/posts', function($userid){
     
-    $user = User::find($userid);
+//     $user = User::find($userid);
 
-    foreach($user->posts as $post) {
-        echo $post->title . "<br>\n";
-    }
-});
+//     foreach($user->posts as $post) {
+//         echo $post->title . "<br>\n";
+//     }
+// });
 
-Route::get('post/{postid}/user', function($postid){
+// Route::get('post/{postid}/user', function($postid){
 
-    return Post::find($postid)->user->name;
+//     return Post::find($postid)->user->name;
 
-});
+// });
 
-Route::get('user/{userid}/role', function($userid){
+// Route::get('user/{userid}/role', function($userid){
 
-    // $user = User::find($userid);
-    // echo $user->name ."你的權限:<br>\n";
-    // foreach($user->roles as $role){
-    //     echo $role->name. "<br>\n";
+//     // $user = User::find($userid);
+//     // echo $user->name ."你的權限:<br>\n";
+//     // foreach($user->roles as $role){
+//     //     echo $role->name. "<br>\n";
 
-    // }
-    //取用roles數性
+//     // }
+//     //取用roles數性
 
-    $role = User::find($userid)->roles()->orderBy('id','desc')->get();
-    return $role;
-    //啋叫roles()方法
+//     $role = User::find($userid)->roles()->orderBy('id','desc')->get();
+//     return $role;
+//     //啋叫roles()方法
 
-});
-
-
-Route::get('role/{roleid}/user', function($roleid){
-
-    $users = Role::find($roleid)
-        ->users()
-        ->orderBy('id','desc')
-        ->get();
-
-    return $users;
-
-});
+// });
 
 
-Route::get('user/country/{countryid}', function ($countryid){
+// Route::get('role/{roleid}/user', function($roleid){
 
-    $country = Country::find($countryid);
+//     $users = Role::find($roleid)
+//         ->users()
+//         ->orderBy('id','desc')
+//         ->get();
 
-    foreach ($country->posts as $post) {
-        echo $post->title . "<br>\n";
-    }
+//     return $users;
 
-
-});
-
-
-Route::get('country/{countryid}/posts', function($countryid){
-
-    $country = Country::find($countryid);
-
-    foreach ($country->posts as $post){
-        echo $post->title . "<br>\n";
-    }
-
-});
-
-Route::get('user/{userid}/photos', function($userid){
-
-    $user = User::find($userid);
-
-    foreach ($user->photos as $photo){
-        // return $photo;
-        echo $photo->path . "<br>\n";
-    }
-
-});
-
-Route::get('photo/{photoid}', function($photoid){
-
-    $photo = Photo::find($photoid);
-
-    return $photo->imageable;
-
-});
-
-Route::get('post/{postid}/tags',function($postid){
+// });
 
 
-    $post = Post::find($postid);
-    echo "文章：" . $post->title . "<br>\n";
+// Route::get('user/country/{countryid}', function ($countryid){
 
-    echo "Tag: ";
-    foreach ($post->tags as $tag) {
-        echo $tag->name . ", ";
-    }
-});
+//     $country = Country::find($countryid);
 
-Route::get('tag/{tagid}/post',function($tagid){
+//     foreach ($country->posts as $post) {
+//         echo $post->title . "<br>\n";
+//     }
 
-    $tag = Tag::find($tagid);
-    echo "Tag: " . $tag->name . "<br>\n";
 
-    echo "<ul>";
-    foreach ($tag->posts as $post){
-        echo "<li>" . $post->title . "</li>";
-    }
-    echo "</ul>";
+// });
 
-});
+
+// Route::get('country/{countryid}/posts', function($countryid){
+
+//     $country = Country::find($countryid);
+
+//     foreach ($country->posts as $post){
+//         echo $post->title . "<br>\n";
+//     }
+
+// });
+
+// Route::get('user/{userid}/photos', function($userid){
+
+//     $user = User::find($userid);
+
+//     foreach ($user->photos as $photo){
+//         // return $photo;
+//         echo $photo->path . "<br>\n";
+//     }
+
+// });
+
+// Route::get('photo/{photoid}', function($photoid){
+
+//     $photo = Photo::find($photoid);
+
+//     return $photo->imageable;
+
+// });
+
+// Route::get('post/{postid}/tags',function($postid){
+
+
+//     $post = Post::find($postid);
+//     echo "文章：" . $post->title . "<br>\n";
+
+//     echo "Tag: ";
+//     foreach ($post->tags as $tag) {
+//         echo $tag->name . ", ";
+//     }
+// });
+
+// Route::get('tag/{tagid}/post',function($tagid){
+
+//     $tag = Tag::find($tagid);
+//     echo "Tag: " . $tag->name . "<br>\n";
+
+//     echo "<ul>";
+//     foreach ($tag->posts as $post){
+//         echo "<li>" . $post->title . "</li>";
+//     }
+//     echo "</ul>";
+
+// });
+
+Route::resource('/posts', 'PostsController');

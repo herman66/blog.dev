@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Post;
 
 class PostsController extends Controller
 {
@@ -14,10 +15,10 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id)
+    public function index()
     {
         //
-        return "Hello World ,ID:" . $id;
+        echo "Hello World ,ID:" ;
     }
 
     /**
@@ -28,6 +29,7 @@ class PostsController extends Controller
     public function create()
     {
         //
+        return view('posts.create');
     }
 
     /**
@@ -39,6 +41,15 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         //
+        //dd($request->all());
+        
+        Post::create($request->all());
+
+        // $post = new Post;
+
+        // $post->title = $request->title;
+        // $post->fulltext = $request->fulltext;
+        // $post->save();
     }
 
     /**
