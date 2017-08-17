@@ -26,7 +26,16 @@
     {{--  <button type="submit" class="btn btn-info">修改並存檔</button>  --}}
     {!! Form::submit('修改並存檔',['class'=>'btn btn-primary']) !!}
 
-    
+    @if(count($errors) > 0)
+<div class="alert alert-success" role="alert">
+  <ul>
+        @foreach($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+  </ul>
+</div>
+@endif
+
  {{--  </form>   --}}
 {!! Form::close() !!}
 
